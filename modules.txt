@@ -1,0 +1,4 @@
+# Go vanity import paths served from juntolabs.dev.
+# Format: <module path under juntolabs.dev> <repository URL> [package dir ...]
+# List package dirs that people `go install` or import, so each gets a page.
+knowtorious https://github.com/junto-labs/knowtorious cmd/kt
