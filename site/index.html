@@ -1,11 +1,438 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Junto Labs</title>
+<meta name="description" content="Junto is a trust-first, Kubernetes-native control plane for work humans and agents share.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%2316181D'/%3E%3Cg transform='translate(24 24) scale(0.8) translate(-24 -24)'%3E%3Ccircle cx='32.5' cy='11' r='4.25' fill='%23fff'/%3E%3Cpath d='M32.5 20 V29 A8.5 8.5 0 0 1 15.5 29' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+:root {
+  --ink: #16181D;
+  --bg: #FFFFFF;
+  --surface: #F5F6F8;
+  --border: #E4E6EA;
+  --muted: #5C616B;
+  --faint: #9AA0A9;
+  --tile: #16181D;
+  --tile-fg: #FFFFFF;
+  --code-bg: #16181D;
+  --code-fg: #E4E6EA;
+  --code-muted: #9AA0A9;
+  --baton: #E8590C;
+  --knowtorious: #6544F0;
+  --knowtorious-text: #6544F0;
+  --sans: Manrope, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #F5F6F8;
+    --bg: #16181D;
+    --surface: #1E2127;
+    --border: #2C3038;
+    --muted: #B8BDC6;
+    --faint: #6B717C;
+    --tile: #FFFFFF;
+    --tile-fg: #16181D;
+    --code-bg: #0F1115;
+    --knowtorious-text: #A897FF;
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+.grid > *, .split > * { min-width: 0; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:hover { color: var(--muted); }
+code, pre, .mono { font-family: var(--mono); font-weight: 500; }
+p code, li code, td code {
+  font-size: 0.86em;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.05em 0.35em;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 600px) { .wrap { padding: 0 16px; } }
+
+.eyebrow {
+  margin: 0 0 16px;
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+h1, h2, h3 { font-weight: 800; margin: 0; }
+h2 { font-size: clamp(30px, 4vw, 44px); letter-spacing: -0.035em; line-height: 1.1; }
+h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.25; }
+.lede { font-size: 19px; color: var(--muted); max-width: 680px; margin: 20px 0 0; }
+
+/* Header */
+header { border-bottom: 1px solid var(--border); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; min-height: 72px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; font-size: 24px; font-weight: 800; letter-spacing: -0.045em; }
+.brand:hover { color: inherit; }
+nav { display: flex; gap: 4px; flex-wrap: wrap; }
+nav a { text-decoration: none; font-size: 15px; font-weight: 700; color: var(--muted); padding: 10px 12px; border-radius: 8px; }
+nav a:hover { color: var(--ink); background: var(--surface); }
+
+.tile-rect { fill: var(--tile); }
+.tile-fg { fill: var(--tile-fg); }
+.tile-stroke { stroke: var(--tile-fg); }
+
+/* Hero */
+.hero { padding: 96px 0 88px; }
+.hero h1 { font-size: clamp(42px, 7vw, 84px); letter-spacing: -0.045em; line-height: 0.98; max-width: 900px; }
+.actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 36px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px;
+  border-radius: 10px; font-weight: 700; font-size: 16px; text-decoration: none;
+  border: 1px solid var(--border);
+}
+.btn:hover { background: var(--surface); color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { opacity: 0.88; background: var(--ink); color: var(--bg); }
+
+section { padding: 88px 0; border-top: 1px solid var(--border); }
+.section-head { max-width: 720px; margin-bottom: 48px; }
+.section-head p { color: var(--muted); margin: 16px 0 0; }
+
+.grid { display: grid; gap: 20px; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 900px) { .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .grid-3, .grid-4, .grid-2 { grid-template-columns: 1fr; } }
+
+.card { border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+.card.fill { background: var(--surface); border-color: transparent; }
+.card p { margin: 12px 0 0; color: var(--muted); font-size: 16px; }
+.kv { margin: 20px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; font-size: 15px; }
+.kv dt { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.kv dd { margin: 0; }
+
+.note { margin-top: 28px; padding: 20px 24px; border-radius: 12px; background: var(--surface); color: var(--muted); font-size: 16px; }
+.note strong { color: var(--ink); }
+
+/* Contract */
+.split { display: grid; grid-template-columns: 1fr 1.1fr; gap: 48px; align-items: start; }
+@media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+.surfaces { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 28px; }
+.surface { border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+.surface b { display: block; font-weight: 800; }
+.surface span { color: var(--muted); font-size: 14px; }
+
+pre {
+  margin: 0; padding: 24px; border-radius: 16px; overflow-x: auto;
+  background: var(--code-bg); color: var(--code-fg);
+  font-size: 13.5px; line-height: 1.65;
+}
+pre .c { color: var(--code-muted); }
+pre .k { color: #FFB38A; }
+pre .p { color: #FFFFFF; }
+
+/* Trust */
+.layer { display: flex; flex-direction: column; }
+.layer .n { font-family: var(--mono); font-size: 13px; color: var(--faint); }
+.layer h3 { margin-top: 8px; }
+.layer .q { margin: 8px 0 0; font-weight: 700; color: var(--ink); font-size: 16px; }
+
+/* Components */
+.product { display: flex; flex-direction: column; gap: 20px; }
+.product .name { display: flex; align-items: center; gap: 16px; }
+.product .name span { font-size: 34px; font-weight: 800; letter-spacing: -0.035em; }
+.product p { margin: 0; color: var(--muted); }
+.product pre { padding: 16px 18px; border-radius: 12px; font-size: 13px; }
+.status {
+  display: inline-block; font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted); white-space: nowrap;
+}
+.status.now { border-color: var(--ink); color: var(--ink); }
+.others { margin-top: 20px; }
+.other { display: flex; gap: 16px; align-items: flex-start; }
+.slot { flex: none; width: 44px; height: 44px; border: 2px dashed var(--faint); border-radius: 10px; }
+.other b { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.other .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.other p { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+
+.rules { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.rules li { display: grid; grid-template-columns: 32px 1fr; gap: 4px; }
+.rules .n { font-family: var(--mono); font-size: 13px; color: var(--faint); padding-top: 3px; }
+.rules b { font-weight: 800; }
+.rules span { color: var(--muted); }
+
+/* Roadmap */
+.phases { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.phase { display: grid; grid-template-columns: 180px 1fr 1fr; gap: 24px; padding: 24px 0; border-bottom: 1px solid var(--border); }
+.phase .label { display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.phase .label b { font-size: 18px; font-weight: 800; letter-spacing: -0.02em; }
+.phase .tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 4px; }
+.phase p { margin: 0; font-size: 16px; }
+.phase .scope { color: var(--muted); }
+@media (max-width: 760px) { .phase { grid-template-columns: 1fr; gap: 12px; } }
+
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 56px 0 72px; color: var(--muted); font-size: 15px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+footer p { margin: 0; max-width: 560px; }
+footer .links { display: flex; gap: 20px; flex-wrap: wrap; }
+</style>
 </head>
 <body>
-<h1>Junto Labs</h1>
-<p>A trust-first SDLC platform. Code lives at <a href="https://github.com/junto-labs">github.com/junto-labs</a>.</p>
+
+<header>
+<div class="wrap">
+<a class="brand" href="/" aria-label="Junto home">
+<svg viewBox="0 0 48 48" width="36" height="36" aria-hidden="true"><rect class="tile-rect" width="48" height="48" rx="11"/><g transform="translate(24 24) scale(0.8) translate(-24 -24)"><circle class="tile-fg" cx="32.5" cy="11" r="4.25"/><path class="tile-stroke" d="M32.5 20 V29 A8.5 8.5 0 0 1 15.5 29" fill="none" stroke-width="7" stroke-linecap="round"/></g></svg>
+Junto
+</a>
+<nav aria-label="Primary">
+<a href="#actors">Actors</a>
+<a href="#trust">Trust</a>
+<a href="#components">Components</a>
+<a href="#roadmap">Roadmap</a>
+<a href="https://github.com/junto-labs">GitHub</a>
+</nav>
+</div>
+</header>
+
+<main>
+
+<div class="hero">
+<div class="wrap">
+<p class="eyebrow">Junto Labs · RFC 0001 · Draft</p>
+<h1>The control plane for work humans and agents share.</h1>
+<p class="lede">Junto runs any workflow that people and agents do together. Every step is a contract that a Human, an Assisted human or an Agent can fulfil, and every transition leaves a signed record of who did what, under whose authority.</p>
+<div class="actions">
+<a class="btn primary" href="https://github.com/junto-labs/junto/blob/rfc/0001-junto-platform/docs/rfcs/0001-junto-platform.md">Read RFC 0001</a>
+<a class="btn" href="https://github.com/junto-labs">github.com/junto-labs</a>
+</div>
+</div>
+</div>
+
+<section id="actors">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">Actor model</p>
+<h2>One accountable principal for every action.</h2>
+<p>A step can be done by a person, by a person with their agent, or by an agent alone. The persona is chosen per step and can change without a redesign.</p>
+</div>
+<div class="grid grid-3">
+<div class="card">
+<h3>Human</h3>
+<dl class="kv">
+<dt>Principal</dt><dd>A person</dd>
+<dt>Delegate</dt><dd>None</dd>
+<dt>Identity</dt><dd>SSO</dd>
+</dl>
+</div>
+<div class="card">
+<h3>Assisted</h3>
+<dl class="kv">
+<dt>Principal</dt><dd>A person</dd>
+<dt>Delegate</dt><dd>That person's agent</dd>
+<dt>Identity</dt><dd>SSO plus a signed, scoped, short-lived delegation</dd>
+</dl>
+</div>
+<div class="card">
+<h3>Agent</h3>
+<dl class="kv">
+<dt>Principal</dt><dd>An agent with a named human sponsor</dd>
+<dt>Delegate</dt><dd>None</dd>
+<dt>Identity</dt><dd>Workload identity</dd>
+</dl>
+</div>
+</div>
+<p class="note"><strong>No self-approval.</strong> An Assisted action counts as the human's own, so a person can't approve work their agent drafted. Every agent's sponsor is the one who gets paged, and the sponsor's trust ceiling caps the agent.</p>
+</div>
+</section>
+
+<section id="contract">
+<div class="wrap split">
+<div>
+<p class="eyebrow">Interface first</p>
+<h2>Define the step before deciding who does it.</h2>
+<p class="lede">An Interaction Contract sets a step's inputs, outputs, evidence and permitted personas. Humans and agents see the same task and the same definition of done, so moving a step from Human to Agent is a policy change, not a rewrite.</p>
+<div class="surfaces">
+<div class="surface"><b>Inbox</b><span>Web forms for people</span></div>
+<div class="surface"><b>CLI</b><span>Text in, JSON out</span></div>
+<div class="surface"><b>API</b><span>For systems and controllers</span></div>
+<div class="surface"><b>MCP</b><span>Tools for agents</span></div>
+</div>
+</div>
+<pre aria-label="Example InteractionContract"><span class="k">apiVersion:</span> juntolabs.dev/v1alpha1
+<span class="k">kind:</span> <span class="p">InteractionContract</span>
+<span class="k">metadata:</span>
+  <span class="k">name:</span> triage-support-ticket
+<span class="k">spec:</span>
+  <span class="k">inputs:</span>
+    <span class="k">schemaRef:</span> schemas/ticket.json
+    <span class="k">knowledge:</span> [support/runbooks, product/known-issues]
+  <span class="k">outputs:</span>
+    <span class="k">schemaRef:</span> schemas/triage-result.json
+  <span class="k">evidence:</span>
+    <span class="k">required:</span> [classification-rationale, knowledge-citations]
+  <span class="k">actors:</span>
+    <span class="k">allowed:</span> [Human, Assisted, Agent]
+    <span class="k">default:</span> Assisted
+    <span class="k">minTrust:</span> contributor   <span class="c"># per contract, not per install</span>
+  <span class="k">review:</span>
+    <span class="k">fourEyes:</span> when-outputs.severity in ['sev1','sev2']
+  <span class="k">sideEffects:</span>
+    - <span class="k">kind:</span> forge.comment   <span class="c"># run by the broker, never the actor</span>
+  <span class="k">sla:</span> 4h</pre>
+</div>
+</section>
+
+<section id="trust">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">Trust model</p>
+<h2>Trust is enforced by components, not prompts.</h2>
+<p>Trust is decided per interaction point, not per installation. Each of the four layers is owned by a component, and a missing policy, credential or evidence item blocks the step.</p>
+</div>
+<div class="grid grid-4">
+<div class="card layer"><span class="n">01</span><h3>Identity</h3><p class="q">Who is acting, for whom?</p><p>SSO for humans, workload identity for agents, signed delegation for Assisted.</p></div>
+<div class="card layer"><span class="n">02</span><h3>Authorization</h3><p class="q">May this actor do this step, now?</p><p>Kubernetes RBAC for the API and CEL policy for contract-level rules.</p></div>
+<div class="card layer"><span class="n">03</span><h3>Containment</h3><p class="q">What if the actor misbehaves?</p><p>A Pod per agent run, egress through a broker, and no write credentials for actors.</p></div>
+<div class="card layer"><span class="n">04</span><h3>Evidence</h3><p class="q">Can we prove what happened?</p><p>A signed, hash-chained evidence bundle for every transition.</p></div>
+</div>
+<div class="grid grid-2" style="margin-top: 20px">
+<div class="card fill"><h3>Earned autonomy</h3><p>Each actor and contract pair has a trust record built from approvals, rework, escalations and overrides. A human approves each promotion, and demotion happens automatically when the score drops below the floor.</p></div>
+<div class="card fill"><h3>Four-eyes is a platform rule</h3><p>Approvers are always a different principal from the author. Irreversible steps, like merging to main or replying to a customer, need a human approver until a policy says otherwise.</p></div>
+</div>
+</div>
+</section>
+
+<section id="components">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">Components</p>
+<h2>Small tools, each with one job.</h2>
+<p>Each component is one binary that runs alone on a laptop, in CI, inside Claude Code or on Kubernetes. They share nothing but JSON Schemas and connect only through files, JSON, exit codes, events and MCP.</p>
+</div>
+<div class="grid grid-2">
+<div class="card product">
+<div class="name">
+<svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#E8590C"/><g transform="translate(24 24) scale(0.8) translate(-24 -24)"><path d="M10 30 L22 18" stroke="#FFFFFF" stroke-opacity="0.55" stroke-width="7" stroke-linecap="round"/><path d="M24 32 L36 20" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/></g></svg>
+<span>Baton</span>
+</div>
+<p>Workflow definitions and run state. Nodes are tasks, decisions, gates and waits that reference contracts, and gates are judged by the engine, never by the actor that did the work. The same workflow YAML runs from the CLI, over MCP or as a controller.</p>
+<pre><span class="c"># a gate is just a command and its exit code</span>
+baton gate add spec-ready \
+  --cmd 'knowtorious lint --space product --max 0'</pre>
+<div><span class="status">Phase 2 · rebuilt from Spektacular</span></div>
+</div>
+<div class="card product">
+<div class="name">
+<svg viewBox="0 0 48 48" width="56" height="56" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#6544F0"/><g transform="translate(24 24) scale(0.8) translate(-24 -24)"><path fill="#FFFFFF" fill-rule="evenodd" d="M17 8 H28 L35 15 V36 Q35 40 31 40 H17 Q13 40 13 36 V12 Q13 8 17 8 Z M22 25.8 A4.5 4.5 0 1 1 26 25.8 L27.2 32 H20.8 Z"/></g></svg>
+<span>Knowtorious</span>
+</div>
+<p>Scoped, access-controlled knowledge. Sessions start with a table of contents, not content, and agents fetch only the entries their contract declares. Checks run before ranking, so out-of-scope knowledge never reaches a prompt.</p>
+<pre>go install juntolabs.dev/knowtorious/cmd/kt@latest</pre>
+<div><span class="status now">Phase 1 · in progress</span></div>
+</div>
+</div>
+
+<div class="grid grid-3 others">
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Crux</b><span class="status">Exists</span></div><p>Agent runtime: one Pod per agent run, with a watchdog and sandbox.</p></div></div>
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Warden</b><span class="status">Later</span></div><p>Policy decisions, trust records and autonomy bindings.</p></div></div>
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Ledger</b><span class="status">Later</span></div><p>Append and verify signed evidence and the audit trail.</p></div></div>
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Broker</b><span class="status">Later</span></div><p>The only holder of write credentials; performs side effects.</p></div></div>
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Intake</b><span class="status">Later</span></div><p>Pulls work items from GitHub, Linear, Jira and support desks.</p></div></div>
+<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>junto-spec</b><span class="status">Schemas</span></div><p>The shared vocabulary: JSON Schemas and nothing else.</p></div></div>
+</div>
+</div>
+</section>
+
+<section id="unix">
+<div class="wrap split">
+<div>
+<p class="eyebrow">Unix philosophy</p>
+<h2>Pipes, not plumbing.</h2>
+<ol class="rules" style="margin-top: 32px">
+<li><span class="n">01</span><div><b>Text in, JSON out.</b> <span>Human text by default, <code>--json</code> on request. Exit 0 passes, 1 fails, so any tool can be a gate.</span></div></li>
+<li><span class="n">02</span><div><b>Plain files first.</b> <span>State lives in a folder you can diff and review. Postgres and CRDs are opt-in backends.</span></div></li>
+<li><span class="n">03</span><div><b>Absent neighbours are fine.</b> <span>With no Ledger, evidence goes to JSONL. With no Broker, side effects print as a plan for a human.</span></div></li>
+<li><span class="n">04</span><div><b>Four faces, one core.</b> <span>Every binary has a CLI, an MCP server, a Claude Code plugin and an optional controller.</span></div></li>
+</ol>
+</div>
+<pre aria-label="Composing Junto tools"><span class="c"># evidence flows from one tool into another</span>
+knowtorious search 'refund policy' \
+  --space support/runbooks --json \
+  | baton pass --run r-42 --evidence -
+
+<span class="c"># every pass is recorded, without Baton</span>
+<span class="c"># knowing that Ledger exists</span>
+baton log --run r-42 --json \
+  | ledger append --stream runs/r-42</pre>
+</div>
+</section>
+
+<section id="roadmap">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">Roadmap</p>
+<h2>Each phase ends at a gate we can demo, not a date.</h2>
+<p>Junto is built with Junto. Each phase moves more of our own development onto the platform, starting with Knowtorious and Baton, and every gap we hit becomes an issue against Junto.</p>
+</div>
+<ol class="phases">
+<li class="phase">
+<div class="label"><b>1 · Knowtorious v0</b><span class="status now">Now</span></div>
+<p class="scope">Read-only list, get and search over a markdown vault, with an MCP server and a Claude Code plugin.</p>
+<p><span class="tag">Gate</span>An agent completes a task by fetching only the entries it needs, with no knowledge in <code>CLAUDE.md</code>.</p>
+</li>
+<li class="phase">
+<div class="label"><b>2 · Baton</b></div>
+<p class="scope">The engine, CLI, MCP and plugin; Interaction Contracts; Spektacular's flows as the engineering pack.</p>
+<p><span class="tag">Gate</span>Spec to merged PR, with four-eyes enforced by the platform.</p>
+</li>
+<li class="phase">
+<div class="label"><b>3 · Knowtorious v1</b></div>
+<p class="scope">Agents propose drafts, approved through a Baton four-eyes gate; then spaces and grants.</p>
+<p><span class="tag">Gate</span>No entry is approved by its author, and an agent reads only what its contract declares.</p>
+</li>
+<li class="phase">
+<div class="label"><b>4 · Full loop</b></div>
+<p class="scope">Support and product packs, a support desk adapter, and Ledger, Broker, Intake and Governor.</p>
+<p><span class="tag">Gate</span>A ticket becomes a fix and the customer is told, on one signed evidence chain.</p>
+</li>
+<li class="phase">
+<div class="label"><b>5 · Earned autonomy</b></div>
+<p class="scope">Warden trust records with automatic demotion, human-approved promotions, and controllers.</p>
+<p><span class="tag">Gate</span>Autonomy changes are driven by evidence, not configuration.</p>
+</li>
+</ol>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="wrap">
+<p>Junto is named after Benjamin Franklin's club of makers who met to improve each other's work. Junto Labs builds it in the open under Apache-2.0.</p>
+<div class="links">
+<a href="https://github.com/junto-labs">GitHub</a>
+<a href="https://github.com/junto-labs/junto/blob/rfc/0001-junto-platform/docs/rfcs/0001-junto-platform.md">RFC 0001</a>
+<a href="https://github.com/junto-labs/knowtorious">Knowtorious</a>
+</div>
+</div>
+</footer>
+
 </body>
 </html>
