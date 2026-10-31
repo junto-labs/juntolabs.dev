@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Junto Labs</title>
-<meta name="description" content="Junto is a trust-first, Kubernetes-native control plane for work humans and agents share.">
+<meta name="description" content="Junto is a trust-first, Kubernetes-native platform for actor-based workflows that humans and agents share.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%2316181D'/%3E%3Cg transform='translate(24 24) scale(0.8) translate(-24 -24)'%3E%3Ccircle cx='32.5' cy='11' r='4.25' fill='%23fff'/%3E%3Cpath d='M32.5 20 V29 A8.5 8.5 0 0 1 15.5 29' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -217,13 +217,26 @@ Junto
 <div class="wrap">
 <p class="eyebrow">Junto Labs · RFC 0001 · Draft</p>
 <h1>The control plane for work humans and agents share.</h1>
-<p class="lede">Junto runs any workflow that people and agents do together. Every step is a contract that a Human, an Assisted human or an Agent can fulfil, and every transition leaves a signed record of who did what, under whose authority.</p>
+<p class="lede">Junto is a trust-first, Kubernetes-native platform for actor-based workflows. Every step is a contract that a Human, an Assisted human or an Agent can fulfil, and every transition leaves a signed record of who did what, under whose authority.</p>
 <div class="actions">
 <a class="btn primary" href="https://github.com/junto-labs/junto/blob/rfc/0001-junto-platform/docs/rfcs/0001-junto-platform.md">Read RFC 0001</a>
 <a class="btn" href="https://github.com/junto-labs">github.com/junto-labs</a>
 </div>
 </div>
 </div>
+
+<section id="approach">
+<div class="wrap">
+<div class="section-head">
+<p class="eyebrow">Approach</p>
+<h2>A small core that keeps pace with agents.</h2>
+</div>
+<div class="grid grid-2">
+<div class="card fill"><h3>Any workflow, SDLC first</h3><p>Nothing in Junto's core knows about software. Domains arrive as workflow packs, and the first are product, engineering and customer support. We prove them by building Junto with Junto.</p></div>
+<div class="card fill"><h3>Agents at the edge</h3><p>Agent tools, protocols, models and runtimes change quickly, so the core depends on none of them. Claude Code, MCP and the agent runtime are adapters that can be added or replaced. Contracts describe outcomes, not prompts or tools.</p></div>
+</div>
+</div>
+</section>
 
 <section id="actors">
 <div class="wrap">
@@ -324,7 +337,7 @@ Junto
 <div class="section-head">
 <p class="eyebrow">Components</p>
 <h2>Small tools, each with one job.</h2>
-<p>Each component is one binary that runs alone on a laptop, in CI, inside Claude Code or on Kubernetes. They share nothing but JSON Schemas and connect only through files, JSON, exit codes, events and MCP.</p>
+<p>Each component is one binary that runs alone on a laptop, in CI, inside Claude Code or on Kubernetes. They share nothing but JSON Schemas and connect only through files, JSON, exit codes, events and agent protocols, MCP today.</p>
 </div>
 <div class="grid grid-2">
 <div class="card product">
@@ -350,7 +363,6 @@ baton gate add spec-ready \
 </div>
 
 <div class="grid grid-3 others">
-<div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Crux</b><span class="status">Exists</span></div><p>Agent runtime: one Pod per agent run, with a watchdog and sandbox.</p></div></div>
 <div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Warden</b><span class="status">Later</span></div><p>Policy decisions, trust records and autonomy bindings.</p></div></div>
 <div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Ledger</b><span class="status">Later</span></div><p>Append and verify signed evidence and the audit trail.</p></div></div>
 <div class="other"><div class="slot" aria-hidden="true"></div><div><div class="row"><b>Broker</b><span class="status">Later</span></div><p>The only holder of write credentials; performs side effects.</p></div></div>
