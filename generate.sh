@@ -24,7 +24,10 @@ page() { # page <import path> <module> <repo>
 HTML
 }
 
-find "$out" -mindepth 1 -maxdepth 1 -type d -exec rm -rf {} +
+# Remove only the go-import pages from the last run, so the blog and other pages stay.
+for dir in "$out"/*/; do
+  if grep -q 'name="go-import"' "$dir/index.html" 2>/dev/null; then rm -rf "$dir"; fi
+done
 while read -r module repo dirs; do
   [[ -z $module || $module == \#* ]] && continue
   page "$module" "$module" "$repo"

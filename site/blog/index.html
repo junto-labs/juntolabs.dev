@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog · Junto Labs</title>
+<meta name="description" content="Notes from Junto Labs as we build Junto.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='11' fill='%2316181D'/%3E%3Cg transform='translate(24 24) scale(0.8) translate(-24 -24)'%3E%3Ccircle cx='32.5' cy='11' r='4.25' fill='%23fff'/%3E%3Cpath d='M32.5 20 V29 A8.5 8.5 0 0 1 15.5 29' fill='none' stroke='%23fff' stroke-width='7' stroke-linecap='round'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/site.css">
+<script src="/site.js" defer></script>
+</head>
+<body>
+
+<header class="dark">
+<div class="wrap">
+<a class="brand" href="/" aria-label="Junto home">
+<svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true"><rect width="48" height="48" rx="11" fill="#FFFFFF"/><g transform="translate(24 24) scale(0.8) translate(-24 -24)"><circle cx="32.5" cy="11" r="4.25" fill="#16181D"/><path d="M32.5 20 V29 A8.5 8.5 0 0 1 15.5 29" fill="none" stroke="#16181D" stroke-width="7" stroke-linecap="round"/></g></svg>
+<span>Junto</span>
+</a>
+<nav aria-label="Primary">
+<details>
+<summary>Tools <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+<div class="menu">
+<a class="menu-item" href="https://github.com/junto-labs/knowtorious"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-knowtorious"/></svg><span><b>Knowtorious</b><small>Scoped knowledge</small></span><span class="ver building">v0.1-dev</span></a>
+<div class="menu-item off" aria-disabled="true"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-baton"/></svg><span><b>Baton</b><small>Workflows</small></span><span class="ver">queued</span></div>
+<div class="menu-item off" aria-disabled="true"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-warden"/></svg><span><b>Warden</b><small>Policy and trust</small></span><span class="ver planned">v?.?.?</span></div>
+<div class="menu-item off" aria-disabled="true"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-ledger"/></svg><span><b>Ledger</b><small>Signed evidence</small></span><span class="ver planned">v?.?.?</span></div>
+<div class="menu-item off" aria-disabled="true"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-broker"/></svg><span><b>Broker</b><small>Side effects</small></span><span class="ver planned">v?.?.?</span></div>
+<div class="menu-item off" aria-disabled="true"><svg width="36" height="36" aria-hidden="true"><use href="/marks.svg#mark-intake"/></svg><span><b>Intake</b><small>Work items in</small></span><span class="ver planned">v?.?.?</span></div>
+</div>
+</details>
+<a class="hide-sm" href="/#how">How it works</a>
+<a href="/blog/" aria-current="page">Blog</a>
+<a class="hide-sm" href="/#lab">Lab</a>
+<a class="icon-btn" href="https://github.com/junto-labs" aria-label="Junto Labs on GitHub"><svg width="20" height="20" aria-hidden="true"><use href="/marks.svg#gh"/></svg></a>
+</nav>
+</div>
+</header>
+
+<main>
+
+<div class="dark">
+<div class="wrap page-head">
+<p class="label">Blog</p>
+<h1>Notes from the lab.</h1>
+<p>What we learn as we build Junto, using Junto.</p>
+</div>
+</div>
+
+<section class="band">
+<div class="wrap">
+<!-- Newest first. Each post: <li><a href="/blog/<slug>/"><time datetime="YYYY-MM-DD">Mon D, YYYY</time><div><b>Title</b><span>One-line summary.</span></div></a></li>
+     Remove the empty state when the first post goes up. -->
+<div class="empty">
+<b>First posts are on the way.</b>
+<p>Follow <a href="https://github.com/junto-labs">junto-labs on GitHub</a> to hear when they land.</p>
+</div>
+<ul class="posts" hidden></ul>
+</div>
+</section>
+
+</main>
+
+<footer>
+<div class="wrap">
+<span>&copy; 2026 Junto Labs</span>
+<a class="icon-btn" href="https://github.com/junto-labs" aria-label="Junto Labs on GitHub"><svg width="20" height="20" aria-hidden="true"><use href="/marks.svg#gh"/></svg></a>
+</div>
+</footer>
+
+</body>
+</html>
