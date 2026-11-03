@@ -9,7 +9,8 @@ This repo stays public because GitHub Pages on the free plan needs a public repo
 ## Pages
 
 - `site/index.html` is the homepage. Styles are in `site/site.css`, scripts in `site/site.js`, and the GitHub icon and logo-system marks in `site/marks.svg`.
-- When a tool ships, update its row in the Tools menu and its card in the roadmap: link it to its release on junto-labs/junto and replace its status with the release version. Add the tool's header and Tools menu entry to the blog pages too.
+- When a tool ships, update its row in the Tools menu and its card in the roadmap: link it to its release on junto-labs/junto and replace its status with the release version. Source lives in the private `junto-labs/junto-platform` monorepo, so never link to source repos.
+- `juntolabs.dev/install.sh` is planned (junto-platform #10). Don't advertise it, or Homebrew, until it exists. Add the tool's header and Tools menu entry to the blog pages too.
 - To preview locally, run `python3 -m http.server -d site` and open http://localhost:8000.
 
 ## Writing a blog post
@@ -21,7 +22,7 @@ This repo stays public because GitHub Pages on the free plan needs a public repo
 
 No modules are listed right now, because `go install` can't reach a private repo. The mechanism stays in case a module becomes public.
 
-1. Add a line to `modules.txt`: the module path under `juntolabs.dev`, the repo URL, and any package dirs people install, e.g. `baton https://github.com/junto-labs/baton cmd/baton`.
+1. Add a line to `modules.txt`: the module path under `juntolabs.dev`, the repo URL, and any package dirs people install, e.g. `example https://github.com/junto-labs/example cmd/example`.
 2. Run `./generate.sh` and commit `site/`.
 
 CI fails if `site/` is out of date with `modules.txt`.
