@@ -90,12 +90,13 @@ h1, h2, h3, p { margin: 0; }
   animation: pulse 1.6s ease-in-out infinite;
 }
 .ver.planned { border-style: dashed; }
+.ver.live::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--live); }
 @keyframes pulse { 50% { opacity: 0.25; } }
 @media (prefers-reduced-motion: reduce) { .ver.building::before { animation: none; } }
 
 .dark { background: var(--ink); color: var(--on-ink); }
 .dark .ver { border-color: #3A3F49; color: var(--on-ink-muted); }
-.dark .ver.building::before { background: #3FC27A; }
+.dark .ver.building::before, .dark .ver.live::before { background: #3FC27A; }
 
 /* Header */
 header { position: relative; z-index: 10; }
@@ -246,6 +247,10 @@ section.band:not(.dark) + section.band:not(.dark) { border-top: 1px solid var(--
 .product .meta { display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap; margin-top: 32px; }
 .repo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 14px; text-decoration: none; }
 .repo:hover { text-decoration: underline; text-underline-offset: 4px; }
+.install { margin-top: 32px; max-width: 520px; }
+.install p { margin-top: 0; font-size: 16px; }
+.install code { font-family: var(--mono); font-size: 0.9em; }
+.install pre { margin-top: 12px; padding: 16px 20px; border-radius: 12px; border: 1px solid var(--border); overflow-x: auto; background: var(--ink); color: #E4E6EA; font-family: var(--mono); font-size: 14px; line-height: 1.7; }
 .product .art { display: flex; justify-content: center; }
 .product .art svg { width: 100%; max-width: 380px; height: auto; aspect-ratio: 1; }
 @media (max-width: 860px) {
